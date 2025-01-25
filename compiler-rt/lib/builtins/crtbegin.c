@@ -34,8 +34,6 @@ static fp __CTOR_LIST__[]
 extern fp __CTOR_LIST_END__[];
 #endif
 
-extern void __cxa_finalize(void *) __attribute__((weak));
-
 static void __attribute__((used)) __do_init(void) {
   static _Bool __initialized;
   if (__builtin_expect(__initialized, 0))
@@ -110,9 +108,6 @@ static void __attribute__((used)) __do_fini(void) {
   if (__builtin_expect(__finalized, 0))
     return;
   __finalized = 1;
-
-  if (__cxa_finalize)
-    __cxa_finalize(__dso_handle);
 
 #ifndef CRT_HAS_INITFINI_ARRAY
   const size_t n = __DTOR_LIST_END__ - __DTOR_LIST__ - 1;
